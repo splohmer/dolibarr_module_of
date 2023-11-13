@@ -203,7 +203,11 @@ class Interfaceoftrigger
 								$postProductionAmount = min($line->qty - max($availableStock - $availableStockWarningLimit, 0), $availableStockWarningLimit) + $missingDesiredStock;
 								if ($postProductionAmount > 0) {
 									// create new production order without customer relation to refill the stock to be within the warning limits
-									$assetOF = new TAssetOF;
+                                    $dateUntilProduced = new DateTime();
+                                    $dateUntilProduced->modify('next week wednesday');
+
+                                    $assetOF = new TAssetOF;
+                                    $assetOF->date_besoin = $dateUntilProduced->getTimestamp();
 									$assetOF->note = $langs->trans("NotRelatedToCustomerOrderAsForFillupStock");
 									$assetOF->addLine($PDOdb, $line->fk_product, 'TO_MAKE', $postProductionAmount, 0, '', 0, $line->id);
 									$assetOF->save($PDOdb);
