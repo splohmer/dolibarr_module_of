@@ -431,6 +431,18 @@ class modof extends DolibarrModules
                                   'user'=>2);				// 0=Menu for internal users, 1=external users, 2=both
         $r++;
 
+        $this->menu[$r]=array(	'fk_menu'=>'fk_mainmenu=of,fk_leftmenu=assetOFlist',			// Put 0 if this is a top menu
+                                  'type'=>'left',			// This is a Top menu entry
+                                  'titre'=>'Cancelled',
+                                  'mainmenu'=>'of',
+                                  'leftmenu'=>'',
+                                  'url'=>'/of/liste_of.php?search_status_of=CANCELLED',
+                                  'position'=>310+$r,
+                                  'enabled'=>'1',			// Define condition to show or hide menu entry. Use '$conf->mymodule->enabled' if entry must be visible if module is enabled.
+                                  'perms'=>'$user->rights->of->of->lire',			// Use 'perms'=>'$user->rights->mymodule->level1->level2' if you want your menu with a permission rules
+                                  'target'=>'',
+                                  'user'=>2);				// 0=Menu for internal users, 1=external users, 2=both
+        $r++;
 
 		// Add here entries to declare new menus
 		//

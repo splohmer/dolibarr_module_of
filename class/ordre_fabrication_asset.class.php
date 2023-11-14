@@ -35,6 +35,7 @@ class TAssetOF extends TObjetStd{
             ,'VALID'=>'ValidForProduction'
             ,'OPEN'=>'InProduction'
 			,'CLOSE'=>'Done'
+            ,'CANCELLED'=>'Cancelled'
 		);
 
  	public $entity;
@@ -223,7 +224,7 @@ class TAssetOF extends TObjetStd{
      */
     public static function getQtyForProduct($fk_product, $type='NEEDED') {
         global $db, $conf;
-        $TStatut = '"CLOSE"';
+        $TStatut = '"CLOSE","CANCELLED"';
         if(! empty($conf->global->OF_USE_DESTOCKAGE_PARTIEL)) $TStatut .= ',"OPEN"';
         if(empty($conf->global->OF_DRAFT_IN_VIRTUAL_STOCK)) $TStatut .= ',"DRAFT"';
         $sql = 'SELECT SUM(aol.qty';

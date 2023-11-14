@@ -255,6 +255,7 @@ WaitingProductsOrdered=Waiting products ordered
 ValidForProduction=Valid for production
 InProduction=In production
 Done=Done
+Cancelled=Cancelled
 
 QtyToMake=Quantity to make
 ProductToAddToOf=Product to add to Production order

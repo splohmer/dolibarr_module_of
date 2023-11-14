@@ -295,6 +295,7 @@ WaitingProductsOrdered = En attente de produit(s) en commande
 ValidForProduction = Valide pour production
 InProduction = En cours de production
 Done = Terminé
+Cancelled = annulé
 
 QtyToMake = Quantité à produire
 ProductToAddToOf = Produits à ajouter à un OF

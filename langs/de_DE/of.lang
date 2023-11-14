@@ -293,6 +293,7 @@ WaitingProductsOrdered = Warten auf Produkt(e) in Bestellung
 ValidForProduction = Gültig für Produktion
 InProduction = in Produktion
 Done = Fertig
+Cancelled = Storniert
 
 QtyToMake = Zu produzierende Menge
 ProductToAddToOf = Produkte, die einem Produktionsauftrag hinzugefügt werden sollen
