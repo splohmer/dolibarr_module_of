@@ -157,6 +157,15 @@ class Interfaceoftrigger
 				dol_include_once('/of/class/ordre_fabrication_asset.class.php');
 				$PDOdb=new TPDOdb;
 
+                $producedProductQtys = [];
+                foreach($object->lines as $line) {
+                    if (array_key_exists($line->fk_product, $producedProductQtys)) {
+                        $producedProductQtys[$line->fk_product] += $line->qty;
+                    } else {
+                        $producedProductQtys[$line->fk_product] = $line->qty;
+                    }
+                }
+
 				foreach($object->lines as $line) {
 
 					// Uniquement si c'est un produit
@@ -179,19 +188,20 @@ class Interfaceoftrigger
 							} else if (!empty($conf->global->OF_MODE_CALCULATE_QTY_TO_MAKE) && $conf->global->OF_MODE_CALCULATE_QTY_TO_MAKE == "2") {
 								// this is needed as the amount of the related customer order is also included already in the theoretical
 								// stock but should not be considered for calculation
-								$theoreticalStock = $prod->stock_theorique + $line->qty; 
+								$theoreticalStock = $prod->stock_theorique + $producedProductQtys[$line->fk_product]; 
 								$qty = $line->qty - $theoreticalStock;
 								$createOF = $theoreticalStock < $line->qty;
 							} else if (!empty($conf->global->OF_MODE_CALCULATE_QTY_TO_MAKE) && $conf->global->OF_MODE_CALCULATE_QTY_TO_MAKE == "3") {
 								// this is needed as the amount of the related customer order is also included already in the theoretical
 								// stock but should not be considered for calculation
-								$theoreticalStock = $prod->stock_theorique + $line->qty;
+								$theoreticalStock = $prod->stock_theorique + $producedProductQtys[$line->fk_product];
 								$qty = $line->qty - ($theoreticalStock - $prod->desiredstock);
 								$createOF = $theoreticalStock - $prod->desiredstock < $line->qty;
 							} else if (!empty($conf->global->OF_MODE_CALCULATE_QTY_TO_MAKE) && $conf->global->OF_MODE_CALCULATE_QTY_TO_MAKE == "4") {
 								// this is needed as the amount of the related customer order is also included already in the theoretical
 								// stock but should not be considered for calculation
-								$theoreticalStock = $prod->stock_theorique + $line->qty;
+                                // TODO: check if same product is used earlier in the loop and add this also to neutralize the theoretical stock
+								$theoreticalStock = $prod->stock_theorique + $producedProductQtys[$line->fk_product];
 								$availableStock = max($theoreticalStock - $prod->desiredstock, 0);
 								$missingDesiredStock = abs(min($theoreticalStock - $prod->desiredstock, 0));
 								$availableStockWarningLimit = max($prod->seuil_stock_alerte - $prod->desiredstock, 0);
