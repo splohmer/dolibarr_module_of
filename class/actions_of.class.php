@@ -518,6 +518,7 @@ class Actionsof
         $object->stock_theorique -= $qtyNeeded;
         $qtyToMake = TAssetOF::getQtyForProduct($parameters['id'], 'TO_MAKE');
         $object->stock_theorique += $qtyToMake;
+        return 0;
     }
 
 	/*
